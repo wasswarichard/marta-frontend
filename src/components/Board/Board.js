@@ -27,12 +27,22 @@ const Board = () => {
         }
 
     }, [config.apiUrl]);
+
+    useEffect(() => {
+        socket.on('message', (message) => {
+            users
+                .filter(user => user.id === message.id)
+                .map(user => user.status = message.status)
+            setUsers(users);
+        })
+
+    }, [users])
     return (
         <div className="board">
-            <BoardColumn title = "SELECTION"  tasks = { users.filter( task => {return task.status === status[0]	} )} />
-            <BoardColumn title = "PROPOSITION" tasks = { users.filter( task => {return task.status === status[1] } )} />
-            <BoardColumn title = "CONTRACT SIGNATURES" tasks = { users.filter( task => {return task.status === status[2]	} )} />
-            <BoardColumn  title = "CLOSING THE OPPORTUNITY" tasks = { users.filter( task => {return task.status === status[3]	} )} />
+            <BoardColumn title = "SELECTION"  tasks = { users.filter( task => {return task.status === status[0]	})} socket={socket} />
+            <BoardColumn title = "PROPOSITION" tasks = { users.filter( task => {return task.status === status[1] })} socket={socket}/>
+            <BoardColumn title = "CONTRACT SIGNATURES" tasks = { users.filter( task => {return task.status === status[2]})} socket={socket}/>
+            <BoardColumn  title = "CLOSING THE OPPORTUNITY" tasks = { users.filter( task => {return task.status === status[3]})} socket={socket} />
         </div>
     );
 }

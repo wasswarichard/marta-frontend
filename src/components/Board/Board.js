@@ -1,20 +1,32 @@
 import React, {useState, useEffect} from 'react';
+import io from 'socket.io-client';
+import store from "../../store/store";
 import "./Board.sass"
 import BoardColumn from "../BoardColum/BoardColumn";
 import axios from "axios";
 import config from "../../Helpers/config.json";
-import data from "../../data";
+
+let socket
 const Board = () => {
-    const status =  ["SELECTION", "PROPOSITION", "CONTRACT_SIGNATURES", "DONE"]
+    const state =  store.getState();
+    const status =  state.status;
     const [users, setUsers] = useState([]);
     useEffect(() => {
-        const loadUsers =  () => {
-           setUsers(data.tasks)
-        }
+        socket = io(config.apiUrl);
+        const loadUsers = async () => {
+            await axios.get(`${config.apiUrl}/users/v1a/users`)
+                .then(response => {
+                    setUsers(response.data)
+                });
+        };
         loadUsers();
+        socket.emit('join', {}, (error) => {});
+        return () => {
+            socket.emit('disconnect');
+            socket.off();
+        }
 
-    }, []);
-
+    }, [config.apiUrl]);
     return (
         <div className="board">
             <BoardColumn title = "SELECTION"  tasks = { users.filter( task => {return task.status === status[0]	} )} />

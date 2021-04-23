@@ -6,7 +6,7 @@ const BoardColumn = (props) => {
         <div className="boardColumn">
             <header className="boardColumn-header"><h1 className="boardColumn-title">{ props.title }</h1></header>
             <div className="boardColumn-taskList">
-                { props.tasks.map( (task) => <TaskCard {...task} /> )}
+                { props.tasks.map( (task) => <TaskCard key={task.id} {...task} /> )}
             </div>
         </div>
     )

@@ -22,7 +22,6 @@ const TaskCard = (props) => {
     }
     const age = calculateAge(props.task);
 
-
     useEffect(() => {
         if(status.indexOf(props.task.status) === 0 ) { setDisableDecline(true)}
         if(status.indexOf(props.task.status) === 3 ) { setDisableApprove(true)}
@@ -59,10 +58,11 @@ const TaskCard = (props) => {
     }
 
     return (
-        <div className="taskCard" >
+        <div className="taskCard">
             <div className="taskCard-header">
                 <span className="match">100% Match</span>
                 {props.task.name} , {age}
+                <span style={{marginLeft: '10px' , color: '#38146b'}}> <i className="fa fa-exclamation-circle" aria-hidden="true"/></span>
             </div>
             <hr/>
             <div className="taskCard-body">
@@ -70,23 +70,24 @@ const TaskCard = (props) => {
                     <img src= {profilePicture} className="taskCard-image" alt="profile picture"/>
                 </div>
                 <div className="taskCard-info">
-                    <label className="label">Experience in care: {props.task.id}</label>
-                    <label className="label"> German Skills:  {props.task.language}</label>
-                    <label className="label"> Smoking:  {props.task.smoke}</label>
-                    <label className="label"> Next availability: {new Date(props.task.nextavail).toLocaleDateString()}</label>
+                    <div>Experience in care: <span className="label-value">{props.task.id}</span></div>
+                    <div>German Skills: <span className="label-value">{props.task.language}</span></div>
+                    <div>Smoking: <span className="label-value">{props.task.smoke}</span></div>
+                    <div>Next availability: <span className="label-value">{new Date(props.task.nextavail).toLocaleDateString()}</span></div>
                 </div>
-                <div>
-                    <button type="button" className="btn btn-danger" onClick={declineRequest} disabled={disableDecline}>
-                        {isDeclining && <i className="fa fa-refresh fa-spin"/>}
-                        {isDeclining && <span style={{marginLeft: '5px'}}>Declining</span>}
-                        {!isDeclining && <span>Decline</span>}
-                    </button>
-                    <button type="button" className="btn btn-success" onClick={approveRequest} disabled={disableApprove}>
-                        {isApproving && <i className="fa fa-refresh fa-spin"/>}
-                        {isApproving && <span style={{marginLeft: '5px'}}>Approving</span>}
-                        {!isApproving && <span>Approve</span>}
-                    </button>
-                </div>
+            </div>
+            <hr/>
+            <div>
+                <button type="button" className="btn btn-danger" onClick={declineRequest} disabled={disableDecline}>
+                    {isDeclining && <i className="fa fa-refresh fa-spin"/>}
+                    {isDeclining && <span style={{marginLeft: '5px'}}>Declining</span>}
+                    {!isDeclining && <span>Decline</span>}
+                </button>
+                <button type="button" className="btn btn-success" onClick={approveRequest} disabled={disableApprove}>
+                    {isApproving && <i className="fa fa-refresh fa-spin"/>}
+                    {isApproving && <span style={{marginLeft: '5px'}}>Approving</span>}
+                    {!isApproving && <span>Approve</span>}
+                </button>
             </div>
         </div>
     )

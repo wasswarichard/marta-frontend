@@ -1,0 +1,125 @@
+$fontFamily: 'Lato', helvetica, Arial, Sans-serif
+
+// Backgrounds
+$bodyBg: #f2f2f2
+$columnBg: #f5f5f5
+$taskCardBorder: #E0E1E2
+$backgroundColor: #CDCED0
+
+// Colors
+$black: #333
+
+
+body
+  background: white
+
+.board
+  display: flex
+  flex-wrap: nowrap
+  justify-content: space-around
+  padding: 15px
+  min-width: 1000px
+  width: 80%
+  margin: 0 auto
+  align-content: stretch
+
+
+.boardColumn
+  font-family: $fontFamily
+  flex-basis: 300px
+  flex-grow: 1
+  margin: 0 5px
+
+  .boardColumn-header
+    padding: 5px
+    margin-bottom: 10px
+    border-bottom: 5px solid $columnBg
+  .boardColumn-title
+    text-transform: capitalize
+    color: $black
+    font-size: 14px
+    line-height: 1.5
+    font-weight: normal
+    margin: 0 5px 0 0
+    word-wrap: break-word
+  .boardColumn-taskList
+    background: $columnBg
+    padding: 20px 10px
+    min-height: 600px
+    height: 300px
+    max-height: 600px
+    overflow-y: auto
+
+.taskCard
+  font-family: $fontFamily
+  border: 2px solid $taskCardBorder
+  border-radius: 5px
+  padding: 15px 15px 10px 15px
+  background: white
+  position: relative
+  margin-bottom: 5px
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.06)
+
+  &:hover
+    cursor: pointer
+
+  .taskCard-header
+    font-size: 14px
+    margin: 0
+    justify-content: space-between
+    align-items: center
+
+    .match
+      color: #3c8bd0
+      margin-right: 10px
+
+  .taskCard-image
+    border-radius: 50%
+    max-width: 20%
+    height: auto
+
+  .taskCard-info
+    display: inline
+    align-items: center
+
+  .btn-success
+    margin-left: 20px
+    font-size: 12px
+  .btn-danger
+    margin-left: 20px
+    font-size: 12px
+
+
+
+  //
+  //.taskCard__title
+  //  margin: 0
+  //  color: $black
+  //  font-weight: 500
+  //  letter-spacing: 0.5px
+  //
+  //.taskCard__footer
+  //  display: flex
+  //  margin-top: 15px
+  //  justify-content: space-between
+  //  align-items: center
+  //
+  //.taskCard__type
+  //  font-size: 12px
+  //  font-weight: bold
+  //
+  //.taskCard__id
+  //  font-size: 12px
+  //  font-weight: 300
+  //  color: $backgroundColor
+  //  margin-right: 10px
+  //  font-variant: small-caps
+  //
+  //.taskCard__avatar
+  //  width: 30px
+  //  height: 30px
+  //  border-radius: 500px
+  //
+  //.taskCard__id, .taskCard__avatar
+  //  vertical-align: middle
+

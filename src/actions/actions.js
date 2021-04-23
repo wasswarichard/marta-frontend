@@ -1,6 +1,6 @@
 import * as actions from "../actionTypes/actionTypes";
-export const UserJoined = description => ({
-    type: actions.LOGIN_USER,
+export const userStatus = description => ({
+    type: actions.STATUS_ADDED,
     payload: description
 
 });

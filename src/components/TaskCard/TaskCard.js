@@ -8,28 +8,46 @@ import store from "../../store/store";
 
 const TaskCard = (task) => {
     const status = store.getState().status;
-    const [isLoading, setIsLoading] = useState(false);
-    const [activeTask, setActiveTask] = useState('');
+    const [isDeclining, setIsDeclining] = useState(false);
+    const [isApproving, setIsApproving] = useState(false);
+    const [disableApprove, setDisableApprove] = useState(false);
+    const [disableDecline, setDisableDecline] = useState(false)
 
-    const calculateAge = (task) =>{
-        const ageDifMs = Date.now() - new Date(task.dob);
-        const ageDate = new Date(ageDifMs);
-        return Math.abs(ageDate.getUTCFullYear() -1970)
+    useEffect(() => {
+        if(status.indexOf(task.status) === 0 ) { setDisableDecline(true)}
+        if(status.indexOf(task.status) === 3 ) { setDisableApprove(true)}
+    })
+
+    const approveRequest = async () => {
+        setIsApproving(true)
+        setDisableApprove(true);
+        setDisableDecline(true);
+        const index = status.indexOf(task.status);
+        await axios.put(`${config.apiUrl}/users/v1a/user/update`, {
+            ...task,
+            status : status[index + 1]
+        }).then(response => {
+            response.data ? setIsApproving(false) : setIsApproving(true)
+        });
     }
-    const age = calculateAge(task);
-    const submitRequest = async () => {
-        setIsLoading(true);
-        await axios.put(`${config.apiUrl}/users/v1a/user/update`, {...task})
-            .then(response => {
-                response.data ? setIsLoading(false) : setIsLoading(true)
-            });
-    };
+
+    const declineRequest = async () => {
+        setIsDeclining(true)
+        const index = status.indexOf(task.status);
+        await axios.put(`${config.apiUrl}/users/v1a/user/update`, {
+            ...task,
+            status : status[index - 1]
+        }).then(response => {
+            response.data ? setIsDeclining(false) : setIsDeclining(true)
+        });
+
+    }
 
     return (
         <div className="taskCard" >
             <div className="taskCard-header">
                 <span className="match">100% Match</span>
-                {task.name} , {age}
+                {task.name} , 20
             </div>
             <hr/>
             <div className="taskCard-body">
@@ -43,12 +61,15 @@ const TaskCard = (task) => {
                     <label className="label"> Next availability: {new Date(task.nextavail).toLocaleDateString()}</label>
                 </div>
                 <div>
-                    <button type="button" className="btn btn-danger">Decline</button>
-
-                    <button type="button" className="btn btn-success" onClick={submitRequest} disabled={isLoading}>
-                        {isLoading && <i className="fa fa-refresh fa-spin"/>}
-                        {isLoading && <span style={{marginLeft: '5px'}}>Approving</span>}
-                        {!isLoading && <span>Approve</span>}
+                    <button type="button" className="btn btn-danger" onClick={declineRequest} disabled={disableDecline}>
+                        {isDeclining && <i className="fa fa-refresh fa-spin"/>}
+                        {isDeclining && <span style={{marginLeft: '5px'}}>Declining</span>}
+                        {!isDeclining && <span>Decline</span>}
+                    </button>
+                    <button type="button" className="btn btn-success" onClick={approveRequest} disabled={disableApprove}>
+                        {isApproving && <i className="fa fa-refresh fa-spin"/>}
+                        {isApproving && <span style={{marginLeft: '5px'}}>Approving</span>}
+                        {!isApproving && <span>Approve</span>}
                     </button>
                 </div>
             </div>

@@ -1,3 +1,2 @@
-export  const MESSAGE_ADDED = "messageAdded";
-export  const MESSAGE_REMOVED = "messageRemoved";
-export const LOGIN_USER = "loggedInUser"
+export  const STATUS_ADDED = "statusAdded";
+export  const STATUS_REMOVED = "statusRemoved";

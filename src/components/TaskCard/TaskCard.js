@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import "bootstrap/dist/css/bootstrap.css";
 import axios from "axios";
-import io from 'socket.io-client';
 import config from "../../Helpers/config.json";
 import profilePicture from "../../images/image.jpg";
 import "font-awesome/css/font-awesome.min.css";
@@ -15,6 +14,14 @@ const TaskCard = (props) => {
     const [isApproving, setIsApproving] = useState(false);
     const [disableApprove, setDisableApprove] = useState(false);
     const [disableDecline, setDisableDecline] = useState(false)
+
+    const calculateAge = (task) =>{
+        const ageDifMs = Date.now() - new Date(task.dob);
+        const ageDate = new Date(ageDifMs);
+        return Math.abs(ageDate.getUTCFullYear() -1970)
+    }
+    const age = calculateAge(props.task);
+
 
     useEffect(() => {
         if(status.indexOf(props.task.status) === 0 ) { setDisableDecline(true)}
@@ -36,13 +43,17 @@ const TaskCard = (props) => {
     }
 
     const declineRequest = async () => {
-        setIsDeclining(true)
+        setIsDeclining(true);
+        setDisableDecline(true);
+        setDisableApprove(true);
         const index = status.indexOf(props.task.status);
         await axios.put(`${config.apiUrl}/users/v1a/user/update`, {
             ...props.task,
             status : status[index - 1]
         }).then(response => {
-            response.data ? setIsDeclining(false) : setIsDeclining(true)
+            response.data ? setIsDeclining(false) : setIsDeclining(true);
+            socket.emit('statusUpdated', {...response.data.data}, (error) => {})
+            store.dispatch(userStatusUpdated({...response.data.data}))
         });
 
     }
@@ -51,7 +62,7 @@ const TaskCard = (props) => {
         <div className="taskCard" >
             <div className="taskCard-header">
                 <span className="match">100% Match</span>
-                {props.task.name} , 20
+                {props.task.name} , {age}
             </div>
             <hr/>
             <div className="taskCard-body">

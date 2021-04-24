@@ -84,12 +84,12 @@ const TaskCard = (props) => {
             <div>
                 <button type="button" className="btn btn-danger" onClick={declineRequest} disabled={disableDecline}>
                     {isDeclining && <i className="fa fa-refresh fa-spin"/>}
-                    {isDeclining && <span style={{marginLeft: '5px'}}>Declining</span>}
+                    {isDeclining && <span style={{marginLeft: '5px' , fontSize: '8px'}}>Declining</span>}
                     {!isDeclining && <span>Decline</span>}
                 </button>
                 <button type="button" className="btn btn-success" onClick={approveRequest} disabled={disableApprove}>
                     {isApproving && <i className="fa fa-refresh fa-spin"/>}
-                    {isApproving && <span style={{marginLeft: '5px'}}>Approving</span>}
+                    {isApproving && <span style={{marginLeft: '5px', fontSize: '8px'}}>Approving</span>}
                     {!isApproving && <span>Approve</span>}
                 </button>
             </div>

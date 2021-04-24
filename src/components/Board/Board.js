@@ -26,7 +26,7 @@ const Board = () => {
             socket.off();
         }
 
-    }, [config.apiUrl]);
+    }, []);
 
     useEffect(() => {
         socket.on('message', (message) => {

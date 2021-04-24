@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import "bootstrap/dist/css/bootstrap.css";
 import axios from "axios";
 import config from "../../Helpers/config.json";
-import profilePicture from "../../images/image.jpg";
+import profilePicture from "../../images/anonymous.jpg";
 import "font-awesome/css/font-awesome.min.css";
 import store from "../../store/store";
 import {userStatusUpdated} from "../../actions/actions";
@@ -77,6 +77,10 @@ const TaskCard = (props) => {
                 </div>
             </div>
             <hr/>
+            <div className="taskCard-decision">
+                <span className="label">AWAITING DECISION</span>
+                <span style={{marginLeft: '15px' , color: '#38146b'}}> <i className="fa fa-clock-o" aria-hidden="true"/></span>
+            </div>
             <div>
                 <button type="button" className="btn btn-danger" onClick={declineRequest} disabled={disableDecline}>
                     {isDeclining && <i className="fa fa-refresh fa-spin"/>}

@@ -82,16 +82,20 @@ const TaskCard = (props) => {
                 <span style={{marginLeft: '15px' , color: '#38146b'}}> <i className="fa fa-clock-o" aria-hidden="true"/></span>
             </div>
             <div>
-                <button type="button" className="btn btn-danger" onClick={declineRequest} disabled={disableDecline}>
-                    {isDeclining && <i className="fa fa-refresh fa-spin"/>}
-                    {isDeclining && <span style={{marginLeft: '5px' , fontSize: '8px'}}>Declining</span>}
-                    {!isDeclining && <span>Decline</span>}
-                </button>
-                <button type="button" className="btn btn-success" onClick={approveRequest} disabled={disableApprove}>
-                    {isApproving && <i className="fa fa-refresh fa-spin"/>}
-                    {isApproving && <span style={{marginLeft: '5px', fontSize: '8px'}}>Approving</span>}
-                    {!isApproving && <span>Approve</span>}
-                </button>
+                {
+                    ! disableDecline && <button type="button" className="btn btn-danger" onClick={declineRequest}>
+                                            {isDeclining && <i className="fa fa-refresh fa-spin"/>}
+                                            {isDeclining && <span style={{marginLeft: '5px' , fontSize: '8px'}}>Declining</span>}
+                                            {!isDeclining && <span>Decline</span>}
+                                         </button>
+                }
+                {
+                    ! disableApprove && <button type="button" className="btn btn-success" onClick={approveRequest}>
+                                        {isApproving && <i className="fa fa-refresh fa-spin"/>}
+                                        {isApproving && <span style={{marginLeft: '5px', fontSize: '8px'}}>Approving</span>}
+                                        {!isApproving && <span>Approve</span>}
+                                     </button>
+                }
             </div>
         </div>
     )
